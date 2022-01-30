@@ -2,7 +2,7 @@
 
 ### How do you use it?
 
-This is meant to be used in conjugtion with greenlock express and the custom proxy server.
+This is meant to be used in conjunction with greenlock express and the custom proxy server.
 
 ### What does a config file supposed to like?
 

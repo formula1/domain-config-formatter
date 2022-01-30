@@ -29,6 +29,8 @@ Heres a minimilist example. We fill in the rest
   - inorder to change this default, you can set the  `defaultTarget`
 - no need to add the subject in the altnames, that is taken care of
   - You can just add wildcards and direct subdomains
+- we add localhost and all the machines ip addresses to the blacklist
+  - This is so you don't run into infinite loops
 
 **Setting a Target**
 - You can specify it as a number
@@ -63,15 +65,16 @@ Heres a minimilist example. We fill in the rest
 type AllowedBaseConfig = {
   maintainerEmail: string,
   defaultTarget?: AllowedUrlOrigin
-  unknownHostProxy?: AllowedUnkownHostProxyConfig,
+  unknownHostProxy?: AllowedUnkownHostConfig,
   sites: Array<AllowedSiteConfig>
 }
 
-type AllowedUnkownHostProxyConfig = {
+type AllowedUnkownHostConfig = {
   allow: "none"
 } | {
   allow: "ip" | "hosts" | "all",
-  restricted?: Array<string>,
+  whitelist?: Array<string>,
+  blacklist?: Array<string>,
   target?: AllowedUrlOrigin
 }
 

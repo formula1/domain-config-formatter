@@ -1,6 +1,6 @@
 
 import { JSON_Unknown, SiteConfig, UrlHost } from "../../types";
-import { formatHost } from "../url";
+import { formatTarget } from "../url";
 import { formatHostNameFactory } from "./hostname";
 import { formatSubDomains } from "./subdomains";
 import { factory_sortHostnames } from "./sortHostnames";
@@ -31,7 +31,7 @@ export function formatSites(
     return {
       subject: subject,
       altnames: formatSubDomains(subject, value.altnames),
-      target: formatHost(value.target, defaultTarget),
+      target: formatTarget(value.target, defaultTarget),
     };
   }).sort(sortHostnames);
 }

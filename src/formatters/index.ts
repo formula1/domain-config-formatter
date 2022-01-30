@@ -5,7 +5,7 @@ import { formatUnknownHost } from "./unknownHost"
 import { formatSites } from "./sites";
 import { formatHostNameFactory } from "./sites/hostname";
 import { unknownToHostConfig } from "./sites/subdomains";
-import { formatHost, formatDefaultTarget } from "./url";
+import { formatTarget, formatDefaultTarget } from "./url";
 
 export function formatJsonToConfig(value: JSON_Unknown): BaseConfig {
   if(typeof value !== "object"){
@@ -59,7 +59,7 @@ export function formatToHostMap(value: JSON_Unknown): HostMap {
     map[subject] = {
       subject: subject,
       subdomains: unknownToHostConfig(subject, value.altnames),
-      target: formatHost(value.target, defaultTarget),
+      target: formatTarget(value.target, defaultTarget),
     };
     return map;
   }, {});

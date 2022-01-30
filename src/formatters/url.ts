@@ -1,24 +1,26 @@
 
+import { isIP } from "net";
+
 import {
   JSON_Unknown, JSON_Object,
   UrlHost
 } from "../types";
 
 import {
-  testPort, testDirectDomain
+  testPort, testTargetHostname
 } from "../validators/url"
 
 const DEFAULT_HOSTNAME = "localhost";
 const DEFAULT_PORT = 8080;
 
 export function formatDefaultTarget(value: JSON_Unknown){
-  return formatHost(value, {
+  return formatTarget(value, {
     hostname: DEFAULT_HOSTNAME,
     port: DEFAULT_PORT
   })
 }
 
-export function formatHost(value: JSON_Unknown, defaultTarget: UrlHost): UrlHost{
+export function formatTarget(value: JSON_Unknown, defaultTarget: UrlHost): UrlHost{
   var hostname: string = defaultTarget.hostname;
   var port: number | string = defaultTarget.port;
   switch(typeof value){
@@ -49,7 +51,7 @@ export function formatHost(value: JSON_Unknown, defaultTarget: UrlHost): UrlHost
     port = Number.parseInt(port);
   }
   testPort(port, hostname);
-  testDirectDomain(hostname);
+  testTargetHostname(hostname);
   return {
     hostname, port
   };

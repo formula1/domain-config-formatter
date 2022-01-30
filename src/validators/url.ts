@@ -1,4 +1,4 @@
-
+import { isIP } from "net";
 
 export const hostnameRegexp = /^((?!-)[A-Za-z0-9-]{1, 63}(?<!-)\\.)+[A-Za-z]{2, 6}$/;
 
@@ -29,6 +29,22 @@ export function testDirectDomain(directdomain: string){
       "the subdomain " + directdomain + " is invalid"
     )
   }
+}
+
+const regexp_dockerHost = /^[a-z0-9]+([._\-a-z0-9]*)$/;
+export function testTargetHostname(hostname: string){
+  if(regexp_dockerHost.test(hostname)){
+    return;
+  }
+  if(hostnameRegexp.test(hostname)){
+    return;
+  }
+  if(isIP(hostname)){
+    return;
+  }
+  throw new Error(
+    "Invalid hostname: " + hostname
+  )
 }
 
 const wildCardRegExp = /^\*\.((?!-)[A-Za-z0-9-]{1, 63}(?<!-)\\.)+[A-Za-z]{2, 6}/;

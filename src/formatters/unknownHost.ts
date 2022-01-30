@@ -1,13 +1,14 @@
 import {
   JSON_Unknown,
   UnknownHostConfig,
-  TypeValidAllow
+  TypeValidAllow,
+  UrlHost
 } from "../types";
 
 import { testWildOrDirectDomain } from "../validators/url";
 import { testIP } from "../validators/ip";
 
-import { formatHost } from "./url";
+import { formatTarget } from "./url";
 
 export function formatUnknownHost(value: JSON_Unknown, defaultTarget: UrlHost): UnknownHostConfig{
   if(!value){
@@ -31,21 +32,21 @@ export function formatUnknownHost(value: JSON_Unknown, defaultTarget: UrlHost): 
       return {
         allow: allow,
         restricted: formatRestricted(TypeValidAllow.IP, value.restricted),
-        target: formatHost(value.target, defaultTarget)
+        target: formatTarget(value.target, defaultTarget)
       };
     }
     case TypeValidAllow.HOSTS: {
       return {
         allow: allow,
         restricted: formatRestricted(TypeValidAllow.HOSTS, value.restricted),
-        target: formatHost(value.target, defaultTarget)
+        target: formatTarget(value.target, defaultTarget)
       };
     }
     case TypeValidAllow.ALL: {
       return {
         allow: allow,
         restricted: formatRestricted(TypeValidAllow.ALL, value.restricted),
-        target: formatHost(value.target, defaultTarget)
+        target: formatTarget(value.target, defaultTarget)
       };
     }
     default: {

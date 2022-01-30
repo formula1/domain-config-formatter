@@ -30,14 +30,25 @@ Heres a minimilist example. We fill in the rest
 - no need to add the subject in the altnames, that is taken care of
   - You can just add wildcards and direct subdomains
 
+**Setting a Target**
+- You can specify it as a number
+ - `99` => `localhost:99`
+- You can specify it as a string
+  - `"host.name:99"` => `host.name:99`
+- you can specify it as an object
+  - `{ hostname: "hello.world", port: 5000 }` => `hello.world:5000`
+  - `{ hostname: "hello.world" }` => `hello.world:8080`
+  - `{ port: 5000 }` => `localhost:5000`
+  - `{}` => `localhost:8080`
+
 **Important**
 - Each altname must have the subjects name at the end
   - Example - `host.name` with altnames `[a.host.name, b.host.name]`
   - Failure - `"host.name"` with an altname `[a.hos.name, b.host.nam]`
 - You may want to save the format it after each update
-  - We sort the lists so they should be the exact same each update if only positions are changed
-  - We remove duplicate altnames
-  - We remove altnames covered by wildcards
+  - It sorts the lists so they should be the exact same each update if only positions are changed
+  - It removes duplicate altnames
+  - It removes altnames covered by wildcards
     - `a.host.name` gets removed if `*.host.name` exists
 
 **Other Notes**

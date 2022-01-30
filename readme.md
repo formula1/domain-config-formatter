@@ -18,6 +18,59 @@ Heres a minimilist example. We fill in the rest
   ]
 }
 ```
+
+Heres a more wordy example. Many here are utilizing the default target.
+It's important to note that for subject e.a, the default port will be 80.
+But for subject a.a the host will be docker_default and use port 5555.
+
+```json
+{
+  "maintainerEmail": "required@email.com",
+  "defaultTarget": "docker_default:999",
+  "unknownHost": {
+    "allow": "all",
+    "whitelist": ["no.cert.but.i.accept"],
+    "blacklist": ["just.in.case"],
+    "target": {
+      "hostname": "docker_unknown",
+      "port": 777
+    }
+  },
+  "sites": [
+    {
+      "subject": "a.a",
+      "altnames": ["a.a.a", "*.a.a.a", "*.b.a.a"],
+      "target": 5555,
+    },
+    {
+      "subject": "b.a",
+      "altnames": ["a.b.a", "*.a.b.a", "*.b.b.a"],
+      "target": "docker_b:80",
+    },
+    {
+      "subject": "c.a",
+      "altnames": ["a.c.a", "*.a.c.a", "*.b.c.a"],
+      "target": {
+        "hostname": "docker_c",
+        "port": 987
+      }
+    },
+    {
+      "subject": "e.a",
+      "target": "docker_e"
+    },
+    {
+      "subject": "d.a",
+      "altnames": ["a.d.a", "*.a.d.a", "*.b.d.a"],
+    },
+    {
+      "subject": "f.a",
+    }
+  ]
+}
+```
+
+
 **Required**
 - maintainerEmail - The email that will be notified about certificates
 - At least one site

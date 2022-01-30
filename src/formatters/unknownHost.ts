@@ -13,15 +13,8 @@ import { testIP } from "../validators/ip";
 
 import { formatTarget } from "./url";
 
-import { networkInterfaces } from "os";
-
 const BAD_HOSTS = ["localhost"];
 const BAD_IPS = ["127.0.0.1"];
-
-Object.values(networkInterfaces()).forEach((internalIps)=>{
-  if(!Array.isArray(internalIps)) return;
-  BAD_IPS.push(...internalIps.map((net)=>(net.address)));
-});
 
 export function formatUnknownHost(
   value: JSON_Unknown,
@@ -89,7 +82,7 @@ export function formatUnknownHost(
     console.warn(
       "Setting the default port to 443 or 80 may result in an infinite loop",
       "If the default .",
-      "just in case we've added localhost and all ip addresses from network interfaces to the blacklist."
+      "just in case we've added localhost and 127.0.0.1 to the blacklist."
     );
     console.warn(
       "Any proxy server you use should probably respect the X-Forwarded-For when it comes to blacklists"

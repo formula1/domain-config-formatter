@@ -27,7 +27,7 @@ Heres a minimilist example. We fill in the rest
 - All traffic from unknown hosts are blocked
 - all traffic for sites and unknown hosts will point to `localhost:8080`
   - inorder to change this default, you can set the  `defaultTarget`
-- no need to add the subject oin the altnames, that is taken care of
+- no need to add the subject in the altnames, that is taken care of
   - You can just add wildcards and direct subdomains
 
 **Important**
@@ -35,7 +35,7 @@ Heres a minimilist example. We fill in the rest
   - Example - `host.name` with altnames `[a.host.name, b.host.name]`
   - Failure - `"host.name"` with an altname `[a.hos.name, b.host.nam]`
 - You may want to save the format it after each update
-  - We sort the lists so they should be the exact same each update if only positions arte chosen
+  - We sort the lists so they should be the exact same each update if only positions are changed
 
 ```typescript
 type AllowedBaseConfig = {
@@ -67,5 +67,3 @@ type AllowedUrlOrigin = number | string | Partial<{
 
 
 ```
-
-# What

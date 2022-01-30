@@ -72,6 +72,8 @@ But for subject a.a the host will be docker_default and use port 5555.
 
 
 **Required**
+- It's expected to be a valid json file
+  - I may allow yaml in the future
 - maintainerEmail - The email that will be notified about certificates
 - At least one site
   - Each site must have at least subject

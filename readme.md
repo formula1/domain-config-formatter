@@ -84,7 +84,7 @@ But for subject a.a the host will be docker_default and use port 5555.
   - inorder to change this default, you can set the  `defaultTarget`
 - no need to add the subject in the altnames, that is taken care of
   - You can just add wildcards and direct subdomains
-- we add localhost and all the machines ip addresses to the blacklist
+- we add localhost and 127.0.0.1 to the blacklist
   - This is so you don't run into infinite loops
 
 **Setting a Target**
@@ -155,3 +155,9 @@ type AllowedUrlOrigin = number | string | Partial<{
 - The code doesn't know the containers aliases and may not know the hosts ip addresses
   - It's probably a good idea to blacklist all aliases and ip addresses that point to itself
   - I don't think most servers will loop back but who knows
+- This code doesn't check the machine's ip addresses
+  - The machine's ip addresses may change so
+    - what is ok one moment can be bad
+    - what is bad one moment can be ok
+  - The proxy server you use should probably black list those ips
+  

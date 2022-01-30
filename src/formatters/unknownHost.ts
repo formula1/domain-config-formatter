@@ -108,15 +108,18 @@ function formatRestricted(
       "When setting the restricted values for allow, it must be an array"
     )
   }
-  return value.map((item: JSON_Unknown)=>{
+  const found: Array<string> = [];
+  value.forEach((item: JSON_Unknown)=>{
     if(typeof item !== "string"){
       throw new Error(
         "when setting restricted its expected to be an array of ips or hostnames"
       );
     }
     RestrictedTypeTesters[allowedTypes](item)
-    return item;
+    if(includes(found, item)) return;
+    found.push(item)
   });
+  return found;
 }
 
 const RestrictedTypeTesters = {

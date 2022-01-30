@@ -36,6 +36,16 @@ Heres a minimilist example. We fill in the rest
   - Failure - `"host.name"` with an altname `[a.hos.name, b.host.nam]`
 - You may want to save the format it after each update
   - We sort the lists so they should be the exact same each update if only positions are changed
+  - We remove duplicate altnames
+  - We remove altnames covered by wildcards
+    - `a.host.name` gets removed if `*.host.name` exists
+
+**Other Notes**
+- This module is pretty finicky so if something goes wrong it will throw an error
+- One example is you can't have multiple of the same host name
+  - Maybe in the future I will allow it and merge multiple
+  - but what happens when they have different targets?
+    - throw?
 
 ```typescript
 type AllowedBaseConfig = {

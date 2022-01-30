@@ -11,7 +11,8 @@ export type UnknownHostConfig = {
   allow: TypeValidAllow.NONE
 } | {
   allow: TypeValidAllow,
-  restricted: Array<string>,
+  whitelist: Array<string>,
+  blacklist: Array<string>,
   target?: UrlHost
 };
 

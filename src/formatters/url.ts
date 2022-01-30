@@ -52,6 +52,16 @@ export function formatTarget(value: JSON_Unknown, defaultTarget: UrlHost): UrlHo
   }
   testPort(port, hostname);
   testTargetHostname(hostname);
+  if(hostname === "localhost" && port === 80){
+    console.warn(
+      "setting a target to localhost:80 could cause an infinite loop"
+    )
+  }
+  if(hostname === "localhost" && port === 443){
+    console.warn(
+      "setting a target to localhost:443 could cause an infinite loop"
+    )
+  }
   return {
     hostname, port
   };

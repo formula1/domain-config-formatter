@@ -4,7 +4,7 @@
 
 This is meant to be used in conjunction with greenlock express and the custom proxy server.
 
-### What does a config file supposed to like?
+### What is a config file supposed to like?
 
 Heres a minimilist example. We fill in the rest
 

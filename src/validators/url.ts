@@ -1,6 +1,6 @@
 import { isIP } from "net";
 
-export const hostnameRegexp = /^((?!-)[A-Za-z0-9-]{1, 63}(?<!-)\\.)+[A-Za-z]{2, 6}$/;
+export const hostnameRegexp = /^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/;
 
 export function testHostname(hostname: string){
   testDirectDomain(hostname);

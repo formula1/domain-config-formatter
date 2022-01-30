@@ -1,6 +1,4 @@
 
-import { isIP } from "net";
-
 import {
   JSON_Unknown, JSON_Object,
   UrlHost
@@ -29,9 +27,9 @@ export function formatTarget(value: JSON_Unknown, defaultTarget: UrlHost): UrlHo
       break
     }
     case "string": {
-      const u = new URL(value);
+      const u = new URL("http://" + value);
       hostname = u.hostname || defaultTarget.hostname;
-      port = u.port !== "" ? u.port : defaultTarget.port;
+      port = u.port !== "" ? u.port : 80;
       break;
     }
     case "object": {

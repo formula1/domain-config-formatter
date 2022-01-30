@@ -3,7 +3,6 @@ import {
   UnknownHostConfig,
   TypeValidAllow,
   UrlHost,
-  SiteConfig
 } from "../types";
 
 import { includes } from "../util/array";

@@ -40,6 +40,7 @@ Heres a minimilist example. We fill in the rest
   - `{ hostname: "hello.world" }` => `hello.world:8080`
   - `{ port: 5000 }` => `localhost:5000`
   - `{}` => `localhost:8080`
+- It doesn't matter if the host is not up, we don't check here anyway
 
 **Important**
 - Each altname must have the subjects name at the end
@@ -88,3 +89,11 @@ type AllowedUrlOrigin = number | string | Partial<{
 
 
 ```
+
+
+
+### Possible issues
+
+- The code doesn't know the containers aliases and may not know the hosts ip addresses
+  - It's probably a good idea to blacklist all aliases and ip addresses that point to itself
+  - I don't think most servers will loop back but who knows

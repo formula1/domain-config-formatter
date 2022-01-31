@@ -83,7 +83,8 @@ If you want to see an even more complex example, checkout `tests/examples/comple
 
 **Buy default**
 - All traffic from unknown hosts are blocked
-- all traffic for sites and unknown hosts will point to `localhost:8080`
+- **WARNING** If unknownHost.allow !== none and there is no white list, everything not covered by the blacklist or the allowed types are allowed through and goes to the resolved target
+- all traffic for sites, altnames and unknown hosts should default to `localhost:8080`
   - inorder to change this default, you can set the  `defaultTarget`
   - Each site can also override the default by setting its target
     - Each altsite can override it's subject's target with its own
@@ -104,14 +105,15 @@ If you want to see an even more complex example, checkout `tests/examples/comple
   - `{ hostname: "hello.world" }` => `hello.world:8080`
   - `{ port: 5000 }` => `localhost:5000`
   - `{}` => `localhost:8080`
-- It doesn't matter if the host is not up, we don't check here anyway
+- It doesn't matter if the host is not up, this is just for handling configs
 
 **Important**
 - Each altname must have the subjects name at the end
   - Example - `host.name` with altnames `[a.host.name, b.host.name]`
-  - Failure - `"host.name"` with an altname `[a.hos.name, b.host.nam]`
-- You may want to save the format it after each update
-  - It sorts the lists so they should be the exact same each update if only positions are changed
+  - Failure - `"host.name"` with altnames `[a.hos.name, b.host.nam]`
+- You may want to resave the greenlock config after each update of the allowed config
+  - It sorts the lists so they should be the exact same each update if only
+ positions are changed
   - It removes duplicate altnames
   - It removes altnames covered by wildcards
     - `a.host.name` gets removed if `*.host.name` exists
@@ -123,35 +125,49 @@ If you want to see an even more complex example, checkout `tests/examples/comple
   - but what happens when they have different targets?
     - throw?
 
+
+**Typescript for Allowed Config**
 ```typescript
-type AllowedBaseConfig = {
+export type AllowedConfig = {
   maintainerEmail: string,
   defaultTarget?: AllowedUrlOrigin
-  unknownHostProxy?: AllowedUnkownHostConfig,
+  unknownHost?: AllowedUnkownHostConfig,
   sites: Array<AllowedSiteConfig>
 }
 
-type AllowedUnkownHostConfig = {
-  allow: "none"
+export type AllowedUnkownHostConfig = {
+  allow: TypeValidAllow.NONE
 } | {
-  allow: "ip" | "hosts" | "all",
+  allow: TypeValidAllow,
   whitelist?: Array<string>,
   blacklist?: Array<string>,
   target?: AllowedUrlOrigin
 }
 
-type AllowedSiteConfig = {
-  subject: string,
-  altnames?: Array<string>,
-  target?: AllowedUrlOrigin,
+export enum TypeValidAllow {
+  NONE = "none",
+  IP = "ip",
+  HOSTS = "hosts",
+  ALL = "all",
 }
 
-type AllowedUrlOrigin = number | string | Partial<{
+export type AllowedSiteConfig = AllowedHostname & {
+  altnames?: Array<AllowedHostname>,
+}
+
+export type AllowedHostname = string | AllowedHostnameObj
+
+export type AllowedHostnameObj = {
+  subject: string,
+  target?: AllowedUrlOrigin
+};
+
+type AllowedUrlOrigin = number | string | Partial<UrlHost>;
+
+export type UrlHost = {
   hostname: string,
   port: number
-}>;
-
-
+}
 
 ```
 
@@ -167,4 +183,11 @@ type AllowedUrlOrigin = number | string | Partial<{
     - what is ok one moment can be bad
     - what is bad one moment can be ok
   - The proxy server you use should probably black list those ips
-  
+- The sites can compile into objects for use with a proxy server. Not sure if sorted list is faster though
+
+### Known issues
+- It deletes any direct subdomain that matches a wildcard domain
+  - This will prevent certian usage such as
+    - admin.dev.host.name => docker_admin
+    - *.dev.host.name => docker_dev
+  - It may get fixed in the future but for now we remove unnecessarty subdomains

@@ -47,7 +47,7 @@ export function testTargetHostname(hostname: string){
   )
 }
 
-const wildCardRegExp = /^\*\.((?!-)[A-Za-z0-9-]{1, 63}(?<!-)\\.)+[A-Za-z]{2, 6}/;
+const wildCardRegExp = /^\*\.((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/;
 export function testWildOrDirectSubdomain(subdomain: string){
   if(subdomain === ""){
     throw new Error("subdomain cannot be empty");

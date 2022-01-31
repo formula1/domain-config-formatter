@@ -1,66 +1,46 @@
-import { JSON_Unknown, BaseConfig, HostMap } from "../types";
+import { AllowedConfig } from "../types/AllowedConfig"
+import { ProxyConfig } from "../types";
+import { GreenlockConfig, GreenlockSite } from "../types/greenlock";
 
-import { formatEmail } from "./email";
-import { formatUnknownHost } from "./unknownHost"
-import { formatSites } from "./sites";
-import { formatHostNameFactory } from "./sites/hostname";
-import { unknownToHostConfig } from "./sites/subdomains";
-import { formatTarget, formatDefaultTarget } from "./url";
+export * from "./greenlock";
+export * from "./proxy";
 
-export function formatJsonToConfig(value: JSON_Unknown): BaseConfig {
-  if(typeof value !== "object"){
-    throw new Error("can only format objects")
-  }
-  if(Array.isArray(value)){
-    throw new Error("cannot format an array, need parts like maintainerEmail")
-  }
+import { factory_sortHostnames } from "./greenlock/sortHostnames";
 
-  const defaultTarget = formatDefaultTarget(value.defaultTarget);
-
+export function proxyToGreenlock(pConfig: ProxyConfig): GreenlockConfig{
+  const hostNameSorter = factory_sortHostnames((site: GreenlockSite)=>(site.subject))
+  const altnameSorter = factory_sortHostnames((altname: string)=>(altname))
   return {
-    maintainerEmail: formatEmail(value.maintainerEmail),
-    defaultTarget: defaultTarget,
-    unknownHost: formatUnknownHost(value.defaultProxy, defaultTarget),
-    sites: formatSites(value.sites, defaultTarget),
+    sites: Object.values(pConfig.sites).map((site)=>{
+      return {
+        subject: site.subject,
+        altnames: [site.subject].concat(
+          Object.keys(site.altnames.wild)
+        ).concat(
+          Object.values(site.altnames.direct).reduce((total, direct)=>{
+            return total.concat(Object.keys(direct))
+          }, [] as Array<string>)
+        ).sort(altnameSorter)
+      }
+    }).sort(hostNameSorter)
   }
 }
 
-export function formatToHostMap(value: JSON_Unknown): HostMap {
-  if(typeof value !== "object"){
-    throw new Error("expecting config to be an object");
-  }
-  if(Array.isArray(value)){
-    throw new Error(
-      "config should not be an array"
-    );
-  }
-  if(!Array.isArray(value.sites)){
-    throw new Error("sites is expected to be an array");
-  }
-  if(value.sites.length === 0){
-    throw new Error("sites is expected to have at least 1 value");
-  }
+export function greenlockToProxy(gConfig: GreenlockConfig): ProxyConfig {
+  console.log(gConfig);
+  throw new Error(
+    "There are some properties that will be missing like maintainerEmail."
+    + "\nCould probably just make it for the sites part but I haven't done that"
+  )
+}
 
-  const defaultTarget = formatDefaultTarget(value.defaultTarget);
 
-  const formatHostName = formatHostNameFactory();
-  return value.sites.reduce((map: HostMap, value: JSON_Unknown)=>{
-    if(typeof value !== "object"){
-      throw new Error(
-        "each site must be an object, got " + value
-      );
-    }
-    if(Array.isArray(value)){
-      throw new Error(
-        "each site must not be an array"
-      );
-    }
-    const subject = formatHostName(value.subject);
-    map[subject] = {
-      subject: subject,
-      subdomains: unknownToHostConfig(subject, value.altnames),
-      target: formatTarget(value.target, defaultTarget),
-    };
-    return map;
-  }, {});
+export function greenlockToAllowed(gConfig: GreenlockConfig): AllowedConfig {
+  console.log(gConfig);
+  throw new Error("This function hasn't been implemented yet");
+}
+
+export function proxyToAllowed(pConfig: GreenlockConfig): AllowedConfig {
+  console.log(pConfig);
+  throw new Error("This function hasn't been implemented yet");
 }

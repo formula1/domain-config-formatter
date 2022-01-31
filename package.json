@@ -1,5 +1,5 @@
 {
-  "name": "multidomain-config-formatter",
+  "name": "domain-config-formatter",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",

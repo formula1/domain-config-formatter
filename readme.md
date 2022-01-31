@@ -6,20 +6,17 @@ This is meant to be used in conjunction with greenlock express and the custom pr
 
 ### What is a config file supposed to like?
 
-Heres a minimilist example. We fill in the rest
+#### Bare minimum
 
 ```json
 {
   "maintainerEmail": "required@email.com",
-  "sites": [
-    {
-      "subject": "host.name",
-    }
-  ]
+  "sites": ["host.name"]
 }
 ```
 
-Heres a more wordy example. Many here are utilizing the default target.
+In this example we will convert the string site into a valid greenlock site with a subject and altnames and point all traffic from that site to `localhost:8080`
+
 It's important to note that for subject e.a, the default port will be 80.
 But for subject a.a the host will be docker_default and use port 5555.
 

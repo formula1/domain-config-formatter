@@ -1,37 +1,43 @@
-import callsites from "callsites";
 import { Command } from "commander";
 
-import { FromFileCommand } from "./FromFile";
-import { FromStdInCommand } from "./FromStdIn";
+import { AllowedToGreenlock as FileGreenlock } from "./File/AllowedToGreenlock";
+import { AllowedToProxy as FileProxy } from "./File/AllowedToProxy";
+import { AllowedToGreenlock as SIOGreenlock } from "./SIO/AllowedToGreenlock";
+import { AllowedToProxy as SIOProxy } from "./SIO/AllowedToProxy";
+import { ProxyToGreenlock } from "./SIO/ProxyToGreenlock";
 
-type FormatOptions = Partial<{
-  pretty: boolean,
-  echo: boolean,
-  outFile: string,
-}>
-
-type FormatFileOptions = FormatOptions & Partial<{ replace: boolean }>;
-
-export class MultiDomainConfigFormatterCommand extends Command {
+export class DomainConfigFormatterCommand extends Command {
   constructor(){
     super();
     this.version(process.env.npm_package_version || "?");
 
     this.addCommand(
-      new FromFileCommand()
+      new FileGreenlock()
     ).addCommand(
-      new FromStdInCommand()
+      new SIOGreenlock()
+    ).addCommand(
+      new FileProxy()
+    ).addCommand(
+      new SIOProxy()
+    ).addCommand(
+      new ProxyToGreenlock()
     );
   }
 
 }
-
-const sites = callsites();
-if(sites.length === 1 && sites[0].getFileName() === __filename){
-  process.on("unhandledRejection", (e)=>{
-    console.error("unhandledRejection:", e);
-    throw e;
-  })
-  const program = new MultiDomainConfigFormatterCommand();
-  program.parse(process.argv);
+if(typeof require !== "undefined"){
+  const moduleParents = Object.values(require.cache)
+  .filter((m) => m && m.children.includes(module));
+  if(moduleParents.length === 0){
+    console.log("ok ok");
+    const program = new DomainConfigFormatterCommand();
+    console.log("created program");
+    console.log("about to parse process.argv", process.argv);
+    program.parse(process.argv);
+    console.log("parsed argv:");
+  } else {
+    console.error("this module has parents");
+  }
+} else {
+  console.error("require is not defined");
 }

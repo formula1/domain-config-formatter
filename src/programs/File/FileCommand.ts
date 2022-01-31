@@ -1,5 +1,5 @@
 import { Command } from "commander";
-
+import { JSON_Unknown } from "../../types/JSON"
 import { promisify } from "util";
 import { resolve as pathResolve } from "path";
 import {
@@ -9,8 +9,6 @@ import {
 
 const readFile = promisify(readFileCB);
 const writeFile = promisify(writeFileCB);
-
-import { formatJsonToConfig } from "../index";
 
 type FormatOptions = Partial<{
   pretty: boolean,
@@ -25,10 +23,11 @@ TODO: use file stream and transform instead of loading the entire file at once
 
 */
 
+type Runner = (v: JSON_Unknown)=>JSON_Unknown;
 
-export class FromFileCommand extends Command {
-  constructor(){
-    super("file");
+export class FileCommand extends Command {
+  constructor(name: string, fn: Runner){
+    super("file-" + name);
     this.argument(
       "[location-of-the-file]",
       [
@@ -38,7 +37,7 @@ export class FromFileCommand extends Command {
       "./sites-config.json"
     )
     .option(
-      "-p, -pretty",
+      "-p, --pretty",
       "whether it should be pretty or not when printed"
     ).option(
       "-e, --echo",
@@ -50,26 +49,27 @@ export class FromFileCommand extends Command {
       "-r, --replace",
 
     ).action((path, optionsRaw: FormatOptions)=>{
-      action(path, optionsRaw);
+      action(path, optionsRaw, fn);
     })
   }
 }
 
 
 
-async function action(path: string, optionsRaw: FormatOptions){
+async function action(path: string, optionsRaw: FormatOptions, fn: Runner){
   const options = formatOptions(optionsRaw);
   path = pathResolve(process.cwd(), path);
   const strIn = await readFile(path, "utf-8");
   const json = JSON.parse(strIn);
-  const formattedJson = formatJsonToConfig(json);
+  const formattedJson = fn(json);
   const strOut = (
     options.pretty ?
     JSON.stringify(formattedJson, null, 2) :
     JSON.stringify(formattedJson)
   );
   if(options.echo){
-    await promisify(process.stdout.write)(strOut);
+    process.stdout.write(strOut);
+    process.stdout.write("\n");
   }
   if(options.outFile){
     await writeFile(options.outFile, strOut);

@@ -1,0 +1,7 @@
+{
+  "maintainerEmail": "required@email.com",
+  "sites": [{
+    "subject": "aa.bb.cc",
+    "altnames": ["aa.cb.cc"]
+  }]
+}

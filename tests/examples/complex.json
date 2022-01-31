@@ -1,0 +1,154 @@
+{
+  "maintainerEmail": "required@email.com",
+  "defaultTarget": "docker_default:999",
+  "unknownHost": {
+    "allow": "all",
+    "whitelist": ["no.cert.but.i.accept"],
+    "blacklist": ["just.in.case"],
+    "target": {
+      "hostname": "docker_unknown",
+      "port": 777
+    }
+  },
+  "sites": [
+    "a.zz",
+    {
+      "subject": "b.zz"
+    },
+    {
+      "subject": "c.zz",
+      "altnames": ["z.c.zz", "z.c.zz", "z.z.c.zz"]
+    },
+    {
+      "subject": "d.zz",
+      "altnames": ["*.d.zz", "*.z.d.zz", "*.d.z.d.zz"]
+    },
+    {
+      "subject": "e.zz",
+      "altnames": ["*.e.zz", "e.z.e.zz", "*.e.z.e.zz", "e.z.e.z.e.zz"]
+    },
+    {
+      "subject": "b.aa",
+      "target": 99
+    },
+    {
+      "subject": "c.aa",
+      "target": "docker_c"
+    },
+    {
+      "subject": "d.aa",
+      "target": "docker_d:99"
+    },
+    {
+      "subject": "e.aa",
+      "target": {
+        "hostname": "docker_e",
+        "port": 250
+      }
+    },
+    {
+      "subject": "f.aa",
+      "target": {
+        "hostname": "docker_f"
+      }
+    },
+    {
+      "subject": "g.aa",
+      "target": {
+        "port": 999
+      }
+    },
+    {
+      "subject": "h.aa",
+      "target": {}
+    },
+    {
+      "subject": "a.bb",
+      "target": "docker_b_default",
+      "altnames": [
+        {
+          "subject": "a.a.bb"
+        },
+        {
+          "subject": "b.a.bb",
+          "target": 99
+        },
+        {
+          "subject": "c.a.bb",
+          "target": "docker_b"
+        },
+        {
+          "subject": "d.a.bb",
+          "target": "docker_c:99"
+        },
+        {
+          "subject": "e.a.bb",
+          "target": {
+            "hostname": "docker_d",
+            "port": 250
+          }
+        },
+        {
+          "subject": "f.a.bb",
+          "target": {
+            "hostname": "docker_e"
+          }
+        },
+        {
+          "subject": "g.a.bb",
+          "target": {
+            "port": 999
+          }
+        },
+        {
+          "subject": "h.a.bb",
+          "target": {}
+        }
+      ]
+    },
+    {
+      "subject": "a.cc",
+      "target": "docker_b_default",
+      "altnames": [
+        {
+          "subject": "*.a.cc"
+        },
+        {
+          "subject": "*.a.a.cc",
+          "target": 99
+        },
+        {
+          "subject": "*.a.a.a.cc",
+          "target": "docker_b"
+        },
+        {
+          "subject": "*.a.a.a.a.cc",
+          "target": "docker_c:99"
+        },
+        {
+          "subject": "*.b.a.cc",
+          "target": {
+            "hostname": "docker_d",
+            "port": 250
+          }
+        },
+        {
+          "subject": "*.c.a.cc",
+          "target": {
+            "hostname": "docker_e"
+          }
+        },
+        {
+          "subject": "*.d.a.cc",
+          "target": {
+            "port": 999
+          }
+        },
+        {
+          "subject": "*.e.a.cc",
+          "target": {}
+        }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,16 @@ import { factory_sortHostnames } from "./sortHostnames";
 export function formatSites(
   value: JSON_Unknown
 ): Array<GreenlockSite> {
+  const formatHostName = formatHostNameFactory();
+  if(typeof value === "string"){
+    const subject = formatHostName(value);
+    return [
+      {
+        subject: subject,
+        altnames: [subject]
+      }
+    ]
+  }
   if(!Array.isArray(value)){
     throw new Error("the sites array must be an array");
   }
@@ -16,7 +26,6 @@ export function formatSites(
     throw new Error("sites is expected to have at least one value");
   }
   const sortHostnames = factory_sortHostnames((h:GreenlockSite)=>(h.subject))
-  const formatHostName = formatHostNameFactory();
   return value.map((value: JSON_Unknown)=>{
     switch(typeof value){
       case "string": {

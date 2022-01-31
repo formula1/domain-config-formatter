@@ -4,7 +4,7 @@ export type AllowedConfig = {
   maintainerEmail: string,
   defaultTarget?: AllowedUrlOrigin
   unknownHost?: AllowedUnkownHostConfig,
-  sites: Array<AllowedSiteConfig>
+  sites: string | Array<AllowedSiteConfig>
 }
 
 export type AllowedUnkownHostConfig = {

@@ -6,14 +6,28 @@ import { formatTarget } from "./target";
 
 
 export function formatSites(value: JSON_Unknown, defaultTarget: UrlHost): HostMap {
+  const formatHostName = formatHostNameFactory();
+  if(typeof value === "string"){
+    const subject = formatHostName(value);
+
+    return {
+      [subject]: {
+        subject: subject,
+        altnames: {
+          top: subject,
+          wild: {},
+          direct: {}
+        }
+      }
+    }
+  }
   if(!Array.isArray(value)){
-    throw new Error("sites is expected to be an array");
+    throw new Error("sites is expected to be an array or a string");
   }
   if(value.length === 0){
     throw new Error("sites is expected to have at least 1 value");
   }
 
-  const formatHostName = formatHostNameFactory();
   return value.reduce((map: HostMap, value: JSON_Unknown)=>{
     var obj: JSON_Object;
     switch(typeof value){

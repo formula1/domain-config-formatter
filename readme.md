@@ -11,6 +11,15 @@ This is meant to be used in conjunction with greenlock express and the custom pr
 ```json
 {
   "maintainerEmail": "required@email.com",
+  "sites": "host.name"
+}
+```
+
+### Old Bare Minimum
+
+```json
+{
+  "maintainerEmail": "required@email.com",
   "sites": ["host.name"]
 }
 ```

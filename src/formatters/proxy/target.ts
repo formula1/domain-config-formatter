@@ -1,12 +1,11 @@
 
 import {
-  JSON_Unknown, JSON_Object,
-  UrlHost
-} from "../types";
+  JSON_Unknown, UrlHost, JSON_Object
+} from "../../types";
 
 import {
   testPort, testTargetHostname
-} from "../validators/url"
+} from "../../validators/url"
 
 const DEFAULT_HOSTNAME = "localhost";
 const DEFAULT_PORT = 8080;
@@ -22,11 +21,15 @@ export function formatTarget(value: JSON_Unknown, defaultTarget: UrlHost): UrlHo
   var hostname: string = defaultTarget.hostname;
   var port: number | string = defaultTarget.port;
   switch(typeof value){
+    case "undefined": break;
     case "number": {
       port = value;
       break
     }
     case "string": {
+      // just providing host and port breaks url
+      // providing a fake protocol breaks url
+      // so providing an http protocol to be safe
       const u = new URL("http://" + value);
       hostname = u.hostname || defaultTarget.hostname;
       port = u.port !== "" ? u.port : 80;
@@ -64,6 +67,8 @@ export function formatTarget(value: JSON_Unknown, defaultTarget: UrlHost): UrlHo
     hostname, port
   };
 }
+
+
 
 function formatUrlHost(
   value: JSON_Object, defaultTarget: UrlHost

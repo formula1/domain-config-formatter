@@ -3,14 +3,13 @@ import {
   UnknownHostConfig,
   TypeValidAllow,
   UrlHost,
-} from "../types";
+} from "../../types";
 
-import { includes } from "../util/array";
+import { includes } from "../../util/array";
 
-import { testWildOrDirectDomain } from "../validators/url";
-import { testIP } from "../validators/ip";
+import { testWildOrDirectDomain, testIP } from "../../validators/url";
 
-import { formatTarget } from "./url";
+import { formatTarget } from "./target";
 
 const BAD_HOSTS = ["localhost"];
 const BAD_IPS = ["127.0.0.1"];

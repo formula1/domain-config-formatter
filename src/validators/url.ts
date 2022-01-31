@@ -6,7 +6,7 @@ export function testHostname(hostname: string){
   testDirectDomain(hostname);
   if(hostname.split(".").length !== 2){
     throw new Error(
-      "subdomains are supported in their own property"
+      "subdomains are supported in their own property: " + hostname
     );
   }
 }
@@ -15,18 +15,18 @@ export function testSubdomain(subdomain: string){
   testDirectDomain(subdomain);
   if(subdomain.split(".").length < 3){
     throw new Error(
-      "subdomains are expected to have a length greater than 2"
+      "subdomains are expected to have a length greater than 2:" + subdomain
     );
   }
 }
 
 export function testDirectDomain(directdomain: string){
   if(directdomain === ""){
-    throw new Error("subdomain cannot be empty");
+    throw new Error("hostname cannot be empty");
   }
   if(!hostnameRegexp.test(directdomain)){
     throw new Error(
-      "the subdomain " + directdomain + " is invalid"
+      "the hostname is invalid: " + directdomain
     )
   }
 }
@@ -54,38 +54,38 @@ export function testWildOrDirectSubdomain(subdomain: string){
   }
   if(subdomain.split(".").length < 3){
     throw new Error(
-      "subdomains are expected to have a length greater than 2"
+      "subdomains are expected to have a length greater than 2: " + subdomain
     );
   }
   if(hostnameRegexp.test(subdomain)) return;
   if(wildCardRegExp.test(subdomain)) return;
   throw new Error(
-    "the subdomain " + subdomain + " is invalid"
+    "the subdomain is invalid: " + subdomain
   );
 }
 
 export function testWildOrDirectDomain(domain: string){
   if(domain === ""){
-    throw new Error("subdomain cannot be empty");
+    throw new Error("hostname cannot be empty");
   }
   if(hostnameRegexp.test(domain)) return;
   if(wildCardRegExp.test(domain)) return;
   throw new Error(
-    "the domain " + domain + " is invalid"
+    "hostmame is invalid: " + domain
   );
 }
 
 
 export const MAX_PORT_NUMBER = Math.pow(2, 16) - 1;
-export function testPort(port: number, where: string){
+export function testPort(port: number){
   if(port > MAX_PORT_NUMBER){
     throw new Error(
-      `the port from ${where} must be a number from 0 to ${MAX_PORT_NUMBER}`
+      `ports must be less or equal to max ${MAX_PORT_NUMBER}: ${port}`
     );
   }
-  if(port < 0){
+  if(port <= 0){
     throw new Error(
-      `the port from ${where} must be a number from 0 to ${MAX_PORT_NUMBER}`
+      `ports must be greater than 0: ${port}`
     );
   }
 }

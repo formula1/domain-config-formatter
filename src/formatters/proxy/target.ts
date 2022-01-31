@@ -51,7 +51,7 @@ export function formatTarget(value: JSON_Unknown, defaultTarget: UrlHost): UrlHo
   if(typeof port === "string"){
     port = Number.parseInt(port);
   }
-  testPort(port, hostname);
+  testPort(port);
   testTargetHostname(hostname);
   if(hostname === "localhost" && port === 80){
     console.warn(

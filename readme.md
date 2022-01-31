@@ -79,7 +79,7 @@ If you want to see an even more complex example, checkout `tests/examples/comple
   - I may allow yaml in the future
 - maintainerEmail - The email that will be notified about certificates
 - At least one site
-  - Each site must have at least subject
+  - That site can be a string or be an object with at least a subject
 
 **Buy default**
 - All traffic from unknown hosts are blocked

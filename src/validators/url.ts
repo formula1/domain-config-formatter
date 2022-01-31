@@ -89,3 +89,10 @@ export function testPort(port: number, where: string){
     );
   }
 }
+
+export function testIP(ip: string){
+  if(isIP(ip)) return;
+  throw new Error(
+    "invalid ip address: " + ip
+  )
+}

@@ -17,6 +17,9 @@ This is meant to be used in conjunction with greenlock express and the custom pr
 
 In this example we will convert the string site into a valid greenlock site with a subject and altnames and point all traffic from that site to `localhost:8080`
 
+#### A more complex example
+
+Many here are utilizing the default target.
 It's important to note that for subject e.a, the default port will be 80.
 But for subject a.a the host will be docker_default and use port 5555.
 
@@ -34,6 +37,7 @@ But for subject a.a the host will be docker_default and use port 5555.
     }
   },
   "sites": [
+    "z.z",
     {
       "subject": "a.a",
       "altnames": ["a.a.a", "*.a.a.a", "*.b.a.a"],
@@ -66,6 +70,8 @@ But for subject a.a the host will be docker_default and use port 5555.
   ]
 }
 ```
+
+If you want to see an even more complex example, checkout `tests/examples/complex.json`
 
 
 **Required**

@@ -85,6 +85,10 @@ If you want to see an even more complex example, checkout `tests/examples/comple
 - All traffic from unknown hosts are blocked
 - all traffic for sites and unknown hosts will point to `localhost:8080`
   - inorder to change this default, you can set the  `defaultTarget`
+  - Each site can also override the default by setting its target
+    - Each altsite can override it's subject's target with its own
+    - If you'd like an alt site to point to another domain that you host you can just set it like "my.other.site".
+      - Ideally the proxy server can see this and handle it internally without having to go through the dns and making an additional request
 - no need to add the subject in the altnames, that is taken care of
   - You can just add wildcards and direct subdomains
 - we add localhost and 127.0.0.1 to the blacklist

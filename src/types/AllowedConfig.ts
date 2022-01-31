@@ -1,13 +1,13 @@
 import { TypeValidAllow, UrlHost } from "./reused";
 type AllowedUrlOrigin = number | string | Partial<UrlHost>;
-export type AllowedBaseConfig = {
+export type AllowedConfig = {
   maintainerEmail: string,
   defaultTarget?: AllowedUrlOrigin
   unknownHost?: AllowedUnkownHostConfig,
   sites: Array<AllowedSiteConfig>
 }
 
-type AllowedUnkownHostConfig = {
+export type AllowedUnkownHostConfig = {
   allow: TypeValidAllow.NONE
 } | {
   allow: TypeValidAllow,
@@ -16,9 +16,13 @@ type AllowedUnkownHostConfig = {
   target?: AllowedUrlOrigin
 }
 
-
-type AllowedSiteConfig = {
-  subject: string,
-  altnames?: Array<string>,
-  target?: AllowedUrlOrigin,
+export type AllowedSiteConfig = AllowedHostname & {
+  altnames?: Array<AllowedHostname>,
 }
+
+export type AllowedHostname = string | AllowedHostnameObj
+
+export type AllowedHostnameObj = {
+  subject: string,
+  target?: AllowedUrlOrigin
+};

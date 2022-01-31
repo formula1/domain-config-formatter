@@ -60,6 +60,5 @@ buck-out/
 **/ios/Pods/
 
 # Personal
-/dist
 hidden*
 hidden.*

@@ -3,14 +3,12 @@ import { TypeValidAllow, UrlHost } from "./reused";
 export type ProxyConfig = {
   maintainerEmail: string,
   defaultTarget: UrlHost
-  unknownHost: UnknownHostConfig,
+  unknownHost?: UnknownHostConfig,
   sites: HostMap,
 }
 
 export type UnknownHostConfig = {
-  allow: TypeValidAllow.NONE
-} | {
-  allow: TypeValidAllow,
+  allow: TypeValidAllow.IP | TypeValidAllow.HOSTS | TypeValidAllow.ALL,
   whitelist: Array<string>,
   blacklist: Array<string>,
   target?: UrlHost

@@ -14,11 +14,14 @@ export function formatJsonToProxy(value: JSON_Unknown): ProxyConfig {
   }
 
   const defaultTarget = formatDefaultTarget(value.defaultTarget);
-
-  return {
+  const obj: ProxyConfig = {
     maintainerEmail: formatEmail(value.maintainerEmail),
     defaultTarget: defaultTarget,
-    unknownHost: formatUnknownHost(value.defaultProxy, defaultTarget),
     sites: formatSites(value.sites, defaultTarget),
   }
+  const unknownHost = formatUnknownHost(value.unknownHost, defaultTarget)
+  if(unknownHost){
+    obj.unknownHost = unknownHost;
+  }
+  return obj;
 }

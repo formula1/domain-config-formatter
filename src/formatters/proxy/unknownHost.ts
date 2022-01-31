@@ -17,11 +17,9 @@ const BAD_IPS = ["127.0.0.1"];
 export function formatUnknownHost(
   value: JSON_Unknown,
   defaultTarget: UrlHost,
-): UnknownHostConfig{
+): UnknownHostConfig | void {
   if(!value){
-    return {
-      allow: TypeValidAllow.NONE
-    }
+    return
   }
   if(typeof value !== "object"){
     throw new Error("default proxy needs to be an object")
@@ -35,7 +33,7 @@ export function formatUnknownHost(
   }
   var ret;
   switch(allow){
-    case TypeValidAllow.NONE: return { allow: allow };
+    case TypeValidAllow.NONE: return;
     case TypeValidAllow.IP: {
       return {
         allow: allow,

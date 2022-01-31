@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "typings": "./src",
-  "no-bin": "dist/programs/index.js",
+  "bin": "dist/programs/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "example-complex": "cat ./tests/examples/complex.json | npm run sio-p",

@@ -2,6 +2,10 @@
   "name": "domain-config-formatter",
   "version": "1.1.0",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/formula1/domain-config-formatter.git"
+  },
   "main": "dist/index.js",
   "typings": "./src",
   "no-bin": "dist/programs/index.js",

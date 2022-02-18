@@ -1,0 +1,25 @@
+{
+  "maintainerEmail": "required@email.com",
+  "defaultTarget": "docker_default:999",
+  "unknownHost": {
+    "allow": "all",
+    "whitelist": ["no.cert.but.i.accept"],
+    "blacklist": ["just.in.case"],
+    "target": {
+      "hostname": "docker_unknown",
+      "port": 777
+    }
+  },
+  "sites": [
+    {
+      "subject": "c.zz",
+      "altnames": [
+        "z.z.z",
+        {
+          "subject": "z",
+          "altnames": "z.z"
+        }
+      ]
+    },
+  ]
+}

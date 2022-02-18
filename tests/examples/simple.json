@@ -4,14 +4,13 @@
     "simple.org",
     {
       "subject": "parent.net",
-      "altnames": ["*.wild.parent.net", "direct.subdomain.parent.net"]
+      "altnames": ["*.wild", "direct.subdomain"]
     },
     {
       "subject": "another.org",
       "altnames": [
-        "*.pretty.long.another.org",
-        "another.org",
-        "more.more.more.more.more.more.more.more.more.another.org"
+        "*.pretty.long",
+        "more.more.more.more.more.more.more.more.more"
       ]
     }
   ]

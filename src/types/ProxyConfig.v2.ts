@@ -12,5 +12,5 @@ export type HostnamePart = {
 } & Partial<{
   sites: SitesMap,
   target: UrlHost,
-  defaultTarget: UrlHost
+  target404: UrlHost
 }>

@@ -118,7 +118,7 @@ function handleDuplicatePart(
       "This alt has already been defined: " + (splitSubject).concat(ancestralSubject).join(".")
     );
   }
-  if(typeof prevPart.defaultTarget !== "undefined"){
+  if(typeof prevPart.target404 !== "undefined"){
     throw new Error(
       "This alt has already been defined: " + (splitSubject).concat(ancestralSubject).join(".")
     );
@@ -127,7 +127,7 @@ function handleDuplicatePart(
     prevPart.target = formatTarget(allowedAlt.target, defaultTarget);
   }
   if(allowedAlt.defaultTarget){
-    prevPart.defaultTarget = formatTarget(allowedAlt.defaultTarget, defaultTarget);
+    prevPart.target404 = formatTarget(allowedAlt.target404, defaultTarget);
   }
   if(allowedAlt.altnames){
     if(typeof prevPart.sites === "undefined"){
@@ -136,7 +136,7 @@ function handleDuplicatePart(
     prevPart.sites = formatSites(
       prevPart.sites,
       allowedAlt.altnames,
-      prevPart.defaultTarget ? prevPart.defaultTarget : defaultTarget,
+      prevPart.target404 ? prevPart.target404 : defaultTarget,
       splitSubject.concat(ancestralSubject),
       ancestorFHN.factory(splitSubject)
     );
@@ -154,7 +154,7 @@ function handleNewPart(
     lastPart.target = formatTarget(allowedAlt.target, defaultTarget);
   }
   if(allowedAlt.defaultTarget){
-    lastPart.defaultTarget = formatTarget(allowedAlt.defaultTarget, defaultTarget);
+    lastPart.target404 = formatTarget(allowedAlt.target404, defaultTarget);
   }
   if(allowedAlt.altnames){
     if(typeof lastPart.sites === "undefined"){
@@ -163,7 +163,7 @@ function handleNewPart(
     lastPart.sites = formatSites(
       lastPart.sites,
       allowedAlt.altnames,
-      lastPart.defaultTarget ? lastPart.defaultTarget : defaultTarget,
+      lastPart.target404 ? lastPart.target404 : defaultTarget,
       splitSubject.concat(ancestralSubject),
       ancestorFHN.factory(splitSubject)
     );

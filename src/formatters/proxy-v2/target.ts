@@ -48,7 +48,9 @@ export function formatTarget(value: JSON_Unknown, defaultTarget: UrlHost): UrlHo
       break;
     }
     default: {
-      throw new Error("origin is expected to be a number, string or object");
+      throw new Error(
+        "origin is expected to be a number, string or object with hostname and port"
+      );
     }
   }
   if(typeof port === "string"){

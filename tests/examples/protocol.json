@@ -1,0 +1,14 @@
+{
+  "maintainerEmail": "required@email.com",
+  "sites": [
+    "simple.org",
+    {
+      "subject": "parent.net",
+      "target": "http://localhost"
+    },
+    {
+      "subject": "number2.net",
+      "target": "https://localhost"
+    }
+  ]
+}

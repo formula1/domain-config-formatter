@@ -7,5 +7,8 @@ export enum TypeValidAllow {
 
 export type UrlHost = {
   hostname: string,
-  port: number
+  port: number,
+
+  // This will probably be important
+  secure?: boolean,
 }

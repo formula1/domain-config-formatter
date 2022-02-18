@@ -16,13 +16,18 @@ export type AllowedUnkownHostConfig = {
   target?: AllowedUrlOrigin
 }
 
-export type AllowedSiteConfig = AllowedHostname & {
-  altnames?: Array<AllowedHostname>,
-}
+export type AllowedSiteConfig = AllowedHostname
 
 export type AllowedHostname = string | AllowedHostnameObj
 
 export type AllowedHostnameObj = {
   subject: string,
-  target?: AllowedUrlOrigin
-};
+} & Partial<{
+  defaultTarget: AllowedUrlOrigin,
+  target: AllowedUrlOrigin
+  altnames: Array<AllowedHostname>
+}>;
+
+type AllowedUrlHost = {
+
+}

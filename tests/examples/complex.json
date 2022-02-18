@@ -17,15 +17,15 @@
     },
     {
       "subject": "c.zz",
-      "altnames": ["z.c.zz", "z.c.zz", "z.z.c.zz"]
+      "altnames": ["z", "z", "z.z"]
     },
     {
       "subject": "d.zz",
-      "altnames": ["*.d.zz", "*.z.d.zz", "*.d.z.d.zz"]
+      "altnames": ["*", "*.z", "*.d.z"]
     },
     {
       "subject": "e.zz",
-      "altnames": ["*.e.zz", "e.z.e.zz", "*.e.z.e.zz", "e.z.e.z.e.zz"]
+      "altnames": ["*", "e.z", "*.e.z", "e.z.e.z"]
     },
     {
       "subject": "b.aa",
@@ -67,41 +67,41 @@
       "target": "docker_b_default",
       "altnames": [
         {
-          "subject": "a.a.bb"
+          "subject": "a"
         },
         {
-          "subject": "b.a.bb",
+          "subject": "b",
           "target": 99
         },
         {
-          "subject": "c.a.bb",
+          "subject": "c",
           "target": "docker_b"
         },
         {
-          "subject": "d.a.bb",
+          "subject": "d",
           "target": "docker_c:99"
         },
         {
-          "subject": "e.a.bb",
+          "subject": "e",
           "target": {
             "hostname": "docker_d",
             "port": 250
           }
         },
         {
-          "subject": "f.a.bb",
+          "subject": "f",
           "target": {
             "hostname": "docker_e"
           }
         },
         {
-          "subject": "g.a.bb",
+          "subject": "g",
           "target": {
             "port": 999
           }
         },
         {
-          "subject": "h.a.bb",
+          "subject": "h",
           "target": {}
         }
       ]
@@ -111,41 +111,41 @@
       "target": "docker_b_default",
       "altnames": [
         {
-          "subject": "*.a.cc"
+          "subject": "*"
         },
         {
-          "subject": "*.a.a.cc",
+          "subject": "*.a",
           "target": 99
         },
         {
-          "subject": "*.a.a.a.cc",
+          "subject": "*.a.a",
           "target": "docker_b"
         },
         {
-          "subject": "*.a.a.a.a.cc",
+          "subject": "*.a.a.a",
           "target": "docker_c:99"
         },
         {
-          "subject": "*.b.a.cc",
+          "subject": "*.b",
           "target": {
             "hostname": "docker_d",
             "port": 250
           }
         },
         {
-          "subject": "*.c.a.cc",
+          "subject": "*.c",
           "target": {
             "hostname": "docker_e"
           }
         },
         {
-          "subject": "*.d.a.cc",
+          "subject": "*.d",
           "target": {
             "port": 999
           }
         },
         {
-          "subject": "*.e.a.cc",
+          "subject": "*.e",
           "target": {}
         }
       ]

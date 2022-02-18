@@ -14,10 +14,19 @@ export function formatJsonToProxy(value: JSON_Unknown): ProxyConfig {
   }
   const formatHostName = formatHostNameFactoryV2();
   const defaultTarget = formatDefaultTarget(value.defaultTarget);
+  const target404 = formatDefaultTarget(value.target404);
   const obj = {
     hostnamePart: "*",
-    defaultTarget: defaultTarget,
-    sites: formatSites({}, value.sites, defaultTarget, [], formatHostName),
+    target404: target404,
+    sites: {},
   }
+  formatSites(
+    obj.sites,
+    value.sites,
+    defaultTarget,
+    target404,
+    [],
+    formatHostName
+  )
   return obj;
 }

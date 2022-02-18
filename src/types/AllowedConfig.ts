@@ -1,11 +1,11 @@
 import { TypeValidAllow, UrlHost } from "./reused";
+import { ALTNAMES_MAP_KEY_IDENTIFIER } from "../constants";
 type AllowedUrlOrigin = number | string | Partial<UrlHost>;
 export type AllowedConfig = {
   maintainerEmail: string,
-  defaultTarget?: AllowedUrlOrigin
   unknownHost?: AllowedUnkownHostConfig,
-  sites: string | Array<AllowedSiteConfig>
-}
+  sites: AllowedHostname | MultiAllowedHostnames
+} & TargetConfig
 
 export type AllowedUnkownHostConfig = {
   allow: TypeValidAllow.NONE
@@ -18,15 +18,28 @@ export type AllowedUnkownHostConfig = {
 
 export type AllowedSiteConfig = AllowedHostname
 
-export type AllowedHostname = string | AllowedHostnameObj
+export type AllowedHostname = string | AllowedHostnameObjSubj
 
-export type AllowedHostnameObj = {
+type AllowedHostnameMap = { [key: string]: AllowedHostname }
+
+type MultiAllowedHostnames = (
+  & AllowedHostnameMap
+  & Array<AllowedHostname>
+)
+
+export type AllowedHostnameObjSubj = {
   subject: string,
-} & Partial<{
-  defaultTarget: AllowedUrlOrigin,
+} & AllowedHostnameObj
+
+type AllowedHostnameObj = Partial<{
   target: AllowedUrlOrigin
-  altnames: Array<AllowedHostname>
-}>;
+  altnames: MultiAllowedHostnames
+}> & TargetConfig;
+
+type TargetConfig = Partial<{
+  defaultTarget: AllowedUrlOrigin,
+  target404: AllowedUrlOrigin
+}>
 
 type AllowedUrlHost = {
 

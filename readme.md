@@ -2,7 +2,7 @@
 
 ### How do you use it?
 
-This is meant to be used in conjunction with greenlock express and the custom proxy server.
+This is meant to be used in conjunction with greenlock express and the custom hostname resolver proxy server.
 
 ### What is a config file supposed to like?
 
@@ -90,15 +90,17 @@ If you want to see an even more complex example, checkout `tests/examples/comple
 - At least one site
   - That site can be a string or be an object with at least a subject
 
-**Buy default**
+**By default**
 - All traffic from unknown hosts are blocked
 - **WARNING** If unknownHost.allow !== none and there is no white list, everything not covered by the blacklist or the allowed types are allowed through and goes to the resolved target
 - all traffic for sites, altnames and unknown hosts should default to `localhost:8080`
   - inorder to change this default, you can set the  `defaultTarget`
-  - Each site can also override the default by setting its target
-    - Each altsite can override it's subject's target with its own
-    - If you'd like an alt site to point to another domain that you host you can just set it like "my.other.site".
-      - Ideally the proxy server can see this and handle it internally without having to go through the dns and making an additional request
+- Each site can also override the default by setting its target
+  - Each altsite can override it's subject's target with its own
+  - If you'd like an alt site to point to another domain that you host you can just set it like "my.other.site".
+    - Ideally the proxy server can see this and handle it internally without having to go through the dns and making an additional request
+  - the parent of the altsites will be considered the new subject
+    - this also goes for any altsites with children as well
 - no need to add the subject in the altnames, that is taken care of
   - You can just add wildcards and direct subdomains
 - we add localhost and 127.0.0.1 to the blacklist
@@ -136,6 +138,7 @@ If you want to see an even more complex example, checkout `tests/examples/comple
 
 
 **Typescript for Allowed Config**
+
 ```typescript
 export type AllowedConfig = {
   maintainerEmail: string,
@@ -171,12 +174,12 @@ export type AllowedHostnameObj = {
   target?: AllowedUrlOrigin
 };
 
-type AllowedUrlOrigin = number | string | Partial<UrlHost>;
-
 export type UrlHost = {
   hostname: string,
   port: number
 }
+
+type AllowedUrlOrigin = number | string | Partial<UrlHost>;
 
 ```
 
@@ -197,6 +200,39 @@ export type UrlHost = {
 ### Known issues
 - It deletes any direct subdomain that matches a wildcard domain
   - This will prevent certian usage such as
-    - admin.dev.host.name => docker_admin
-    - *.dev.host.name => docker_dev
+    - admin.dev.host.name => docker_dev_admin
+    - *.dev.host.name => docker_dev_proxy
   - It may get fixed in the future but for now we remove unnecessarty subdomains
+- While there are a lot of errors, they aren't always helpful
+
+### Plans
+- allow yml files
+- allow people to repeat subdomains for another target
+  - api.localhost.net, users.localhost.net for repeat: tunnel
+    - api.tunnel.localhost.net, users.tunnel.localhost.net
+  - api.admin.localhost.net, users.admin.localhost for repeat: ci
+    - api.ci.admin.localhost.net, users.ci.admin.localhost.net
+```javascript
+
+function handleRepeat(relatedDomain, subdomains, repeatedDomain){
+  const relSplit = relatedDomain.split(".")
+  const repSplit = repeatedDomain.split(".")
+  return subdomains.map((subdomain)=>{
+    return (
+      subdomain.split(".").slice(0, -1 * relSplit.length)
+    ).concat(
+      repSplit
+    ).concat(
+      relSplit
+    ).join(".")
+  })
+
+}
+
+```
+- allow a subdomain to have it's subdomains become a default target
+- support for `!`
+  - with dnsmasq, a domain name and **all** subdomains are directed to a subdomain
+  - while this doesn't make sense for most situations and is not valid with regard to
+  - this could also be good for anytime a domain name and all its subdomain go to the same target. In this case, speed can be great instead of going deeper and deeper
+  - this is also a compilation optomization. while there may be slowdown during compilation, theres speed benefits at runtime.
